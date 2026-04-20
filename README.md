@@ -64,6 +64,11 @@ finder/
 - **YTJ / PRH Avoin data** — yritystiedot (nimi, Y-tunnus, osoite, toimiala)
   - https://avoindata.prh.fi/ytj.html
   - Ei vaadi API-avainta, ilmainen
+- **Google Places API** (valinnainen) — puhelin, verkkosivu, Google-arvio
+  - Edge Function hoitaa kutsut, API-avain palvelinpuolella
+  - Ks. [DEPLOYMENT.md](./DEPLOYMENT.md)
+- **Web scraping** — sähköposti + some-tilit yritysten verkkosivuilta
+  - Yksinkertainen regex-pohjainen ekstraktio
 
 ## Roadmap (MVP jälkeen)
 
