@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard — Voon Lead Finder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/styles/main.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <a href="/dashboard.html" class="brand">
+          <span class="brand-logo">V</span>
+          <span>Voon <span class="accent">Finder</span></span>
+        </a>
+        <nav class="sidebar-nav">
+          <button data-nav="overview" class="active"><span class="ic">📊</span> Yleiskatsaus</button>
+          <button data-nav="search"><span class="ic">🔍</span> Uusi haku</button>
+          <button data-nav="leads"><span class="ic">📋</span> Liidit</button>
+          <button data-nav="history"><span class="ic">🕒</span> Hakuhistoria</button>
+          <button data-nav="settings"><span class="ic">⚙️</span> Asetukset</button>
+        </nav>
+        <div class="sidebar-footer">
+          <div class="sidebar-user">
+            <strong id="userCompany">—</strong>
+            <span id="userEmail">—</span>
+          </div>
+          <button class="btn btn-ghost btn-sm" id="logoutBtn" style="width: 100%; margin-top: 0.5rem; justify-content: flex-start;">
+            <span>↩</span> Kirjaudu ulos
+          </button>
+        </div>
+      </aside>
+
+      <main class="main-area">
+        <button class="btn btn-secondary btn-sm mobile-menu-toggle" id="menuToggle" style="margin-bottom: 1rem;">☰ Valikko</button>
+
+        <!-- YLEISKATSAUS -->
+        <section class="page active" data-page="overview">
+          <div class="page-header">
+            <div>
+              <h1 class="page-title">Yleiskatsaus</h1>
+              <p class="page-subtitle">Liidiesi tilanne ja jakaumat yhdellä silmäyksellä.</p>
+            </div>
+            <button class="btn btn-primary" data-nav-btn="search">+ Uusi haku</button>
+          </div>
+
+          <div class="kpi-grid" id="kpiGrid">
+            <div class="stat-card">
+              <div class="label">Liidejä yhteensä</div>
+              <div class="value" id="kpiTotal">0</div>
+              <div class="delta" id="kpiTotalDelta">—</div>
+            </div>
+            <div class="stat-card">
+              <div class="label">Tällä viikolla</div>
+              <div class="value" id="kpiWeek">0</div>
+              <div class="delta" id="kpiWeekDelta">—</div>
+            </div>
+            <div class="stat-card">
+              <div class="label">Hakuja tehty</div>
+              <div class="value" id="kpiSearches">0</div>
+              <div class="delta">Tallennettu historiaan</div>
+            </div>
+            <div class="stat-card">
+              <div class="label">Keskisopivuus</div>
+              <div class="value" id="kpiScore">0</div>
+              <div class="delta">Voonin ICP-vastaavuus</div>
+            </div>
+          </div>
+
+          <div class="chart-grid">
+            <div class="chart-card">
+              <h4>Liidien kertymä viimeisten 30 päivän aikana</h4>
+              <div class="chart-wrap"><canvas id="trendChart"></canvas></div>
+            </div>
+            <div class="chart-card">
+              <h4>Jakauma toimialoittain</h4>
+              <div class="chart-wrap"><canvas id="industryChart"></canvas></div>
+            </div>
+          </div>
+
+          <div class="chart-grid">
+            <div class="chart-card">
+              <h4>Jakauma maakunnittain</h4>
+              <div class="chart-wrap"><canvas id="regionChart"></canvas></div>
+            </div>
+            <div class="chart-card">
+              <h4>Liidien statusjakauma</h4>
+              <div class="chart-wrap"><canvas id="statusChart"></canvas></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- UUSI HAKU -->
+        <section class="page" data-page="search">
+          <div class="page-header">
+            <div>
+              <h1 class="page-title">Uusi haku</h1>
+              <p class="page-subtitle">Rajaa kohde ja käynnistä liidien keruu YTJ-yritysrekisteristä.</p>
+            </div>
+          </div>
+
+          <div class="card" style="max-width: 720px;">
+            <form id="searchForm">
+              <div class="form-group">
+                <label class="form-label" for="searchRegion">Alue (maakunta)</label>
+                <select class="form-select" id="searchRegion" required>
+                  <option value="">Valitse maakunta…</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="searchIndustry">Toimiala (TOL 2008)</label>
+                <select class="form-select" id="searchIndustry" required>
+                  <option value="">Valitse toimiala…</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="searchAudience">Kohderyhmä</label>
+                <select class="form-select" id="searchAudience">
+                  <option value="any">Ei rajausta</option>
+                </select>
+                <span class="form-hint">Auttaa pisteyttämään ja luokittelemaan liidit Voonin palveluiden näkökulmasta.</span>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="searchLimit">Liidien enimmäismäärä</label>
+                <select class="form-select" id="searchLimit">
+                  <option value="25">25</option>
+                  <option value="50" selected>50</option>
+                  <option value="100">100</option>
+                </select>
+              </div>
+
+              <button class="btn btn-primary btn-large" type="submit" id="searchSubmit">
+                <span>🔎</span> Kerää liidit
+              </button>
+              <span class="form-error" id="searchError"></span>
+            </form>
+          </div>
+
+          <div id="searchResult" style="margin-top: 1.5rem;"></div>
+        </section>
+
+        <!-- LIIDIT -->
+        <section class="page" data-page="leads">
+          <div class="page-header">
+            <div>
+              <h1 class="page-title">Liidit</h1>
+              <p class="page-subtitle" id="leadsCount">0 liidiä tallennettuna</p>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+              <button class="btn btn-secondary" id="exportCsv">⬇ Vie CSV</button>
+              <button class="btn btn-primary" data-nav-btn="search">+ Uusi haku</button>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <div class="table-toolbar">
+              <input type="search" class="form-input" id="leadsSearch" placeholder="Hae yrityksen nimestä, kaupungista…" style="flex: 1;" />
+              <select class="form-select" id="leadsStatusFilter" style="max-width: 200px;">
+                <option value="">Kaikki statukset</option>
+                <option value="new">Uusi</option>
+                <option value="contacted">Yhteydenotettu</option>
+                <option value="qualified">Karsittu</option>
+                <option value="archived">Arkistoitu</option>
+              </select>
+            </div>
+            <div id="leadsTableContainer"></div>
+          </div>
+        </section>
+
+        <!-- HAKUHISTORIA -->
+        <section class="page" data-page="history">
+          <div class="page-header">
+            <div>
+              <h1 class="page-title">Hakuhistoria</h1>
+              <p class="page-subtitle">Aiempien hakujen kronologinen lista.</p>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <div id="historyContainer"></div>
+          </div>
+        </section>
+
+        <!-- ASETUKSET -->
+        <section class="page" data-page="settings">
+          <div class="page-header">
+            <div>
+              <h1 class="page-title">Asetukset</h1>
+              <p class="page-subtitle">Tilin ja profiilin hallinta.</p>
+            </div>
+          </div>
+
+          <div class="card" style="max-width: 560px;">
+            <h4 style="margin-bottom: 1rem;">Profiili</h4>
+            <form id="profileForm">
+              <div class="form-group">
+                <label class="form-label" for="profileEmail">Sähköposti</label>
+                <input class="form-input" id="profileEmail" type="email" disabled />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="profileCompany">Yrityksen nimi</label>
+                <input class="form-input" id="profileCompany" type="text" />
+              </div>
+              <button class="btn btn-primary" type="submit">Tallenna</button>
+            </form>
+          </div>
+
+          <div class="card" style="max-width: 560px; margin-top: 1rem;">
+            <h4 style="margin-bottom: 0.5rem;">Vaarallinen alue</h4>
+            <p style="color: var(--text-2); margin-bottom: 1rem;">Kirjaudu ulos kaikilta laitteilta.</p>
+            <button class="btn btn-danger" id="logoutBtn2">Kirjaudu ulos</button>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Lead detail drawer -->
+    <aside class="drawer" id="leadDrawer" aria-label="Liidin tiedot">
+      <button class="drawer-close" id="drawerClose" aria-label="Sulje">×</button>
+      <div id="drawerContent"></div>
+    </aside>
+
+    <script type="module" src="/src/dashboard.js"></script>
+  </body>
+</html>
