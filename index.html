@@ -12,32 +12,43 @@
     <link rel="stylesheet" href="/src/styles/main.css" />
   </head>
   <body>
-    <nav class="navbar">
-      <div class="navbar-inner">
-        <a href="/" class="brand">
-          <span class="brand-logo">V</span>
-          <span>Voon <span class="accent">Lead Finder</span></span>
-        </a>
-        <div class="nav-links">
-          <a href="#ominaisuudet">Ominaisuudet</a>
-          <a href="#prosessi">Miten toimii</a>
-          <a href="#hinnoittelu">Hinnoittelu</a>
-          <button class="btn btn-ghost btn-sm" id="openLogin">Kirjaudu</button>
-          <button class="btn btn-primary btn-sm" id="openSignup">Aloita ilmaiseksi</button>
-        </div>
-      </div>
-    </nav>
+    <section class="prisma-hero">
+      <div class="prisma-hero-inner">
+        <div class="prisma-bg" aria-hidden="true"></div>
+        <div class="prisma-noise" aria-hidden="true"></div>
+        <div class="prisma-gradient" aria-hidden="true"></div>
 
-    <section class="hero">
-      <div class="hero-inner">
-        <h1>Löydä parhaat <span class="accent">B2B-liidit Suomesta</span> — sekunneissa</h1>
-        <p class="lead">
-          Voon Lead Finder kerää automaattisesti potentiaalisten asiakkaiden yhteystiedot valitsemaltasi alueelta,
-          toimialalta ja kohderyhmältä. Suomen yritysrekisterin ja avoimen datan pohjalta — GDPR-yhteensopivasti.
-        </p>
-        <div class="hero-ctas">
-          <button class="btn btn-primary btn-large" id="openSignupHero">Kokeile ilmaiseksi</button>
-          <a href="#prosessi" class="btn btn-secondary btn-large">Katso miten toimii</a>
+        <nav class="prisma-nav" aria-label="Päänavigaatio">
+          <div class="prisma-nav-inner">
+            <a href="#ominaisuudet">Ominaisuudet</a>
+            <a href="#prosessi">Prosessi</a>
+            <a href="#hinnoittelu">Hinnoittelu</a>
+            <button id="openLogin" type="button">Kirjaudu</button>
+            <button id="openSignup" type="button">Aloita</button>
+          </div>
+        </nav>
+
+        <div class="prisma-content">
+          <div class="prisma-grid">
+            <div class="prisma-word-wrap">
+              <h1 class="prisma-word" data-word="Voon" data-asterisk="true"></h1>
+            </div>
+
+            <div class="prisma-side">
+              <p class="prisma-copy">
+                Voon Lead Finder kerää potentiaaliset B2B-asiakkaat Suomen yritysrekisteristä ja
+                rikastaa ne Google Placesin ja avoimen webin tiedoilla — sekunneissa, GDPR-yhteensopivasti.
+              </p>
+              <button class="prisma-cta" id="openSignupHero" type="button">
+                Aloita ilmaiseksi
+                <span class="prisma-cta-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
+                  </svg>
+                </span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
