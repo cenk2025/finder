@@ -2,3 +2,6 @@ project_id = "voon-lead-finder"
 
 [functions.enrich-lead]
 verify_jwt = true
+
+[functions.search-places]
+verify_jwt = true

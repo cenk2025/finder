@@ -106,34 +106,38 @@
           <div class="card" style="max-width: 720px;">
             <form id="searchForm">
               <div class="form-group">
-                <label class="form-label" for="searchRegion">Alue (maakunta)</label>
-                <select class="form-select" id="searchRegion" required>
-                  <option value="">Valitse maakunta…</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label" for="searchIndustry">Toimiala (TOL 2008)</label>
-                <select class="form-select" id="searchIndustry" required>
+                <label class="form-label" for="searchCategory">Toimiala</label>
+                <select class="form-select" id="searchCategory" required>
                   <option value="">Valitse toimiala…</option>
                 </select>
+                <span class="form-hint">Esim. ravintolat, hammaslääkärit, autokorjaamot, kaupungintalot.</span>
               </div>
 
-              <div class="form-group">
-                <label class="form-label" for="searchAudience">Kohderyhmä</label>
-                <select class="form-select" id="searchAudience">
-                  <option value="any">Ei rajausta</option>
-                </select>
-                <span class="form-hint">Auttaa pisteyttämään ja luokittelemaan liidit Voonin palveluiden näkökulmasta.</span>
+              <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                  <label class="form-label" for="searchRegion">Maakunta</label>
+                  <select class="form-select" id="searchRegion" required>
+                    <option value="">Valitse maakunta…</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="searchCity">Kaupunki (vapaaehtoinen)</label>
+                  <select class="form-select" id="searchCity" disabled>
+                    <option value="">Koko maakunta</option>
+                  </select>
+                  <span class="form-hint">Kaupunki tarkentaa hakua.</span>
+                </div>
               </div>
 
               <div class="form-group">
                 <label class="form-label" for="searchLimit">Liidien enimmäismäärä</label>
                 <select class="form-select" id="searchLimit">
-                  <option value="25">25</option>
-                  <option value="50" selected>50</option>
-                  <option value="100">100</option>
+                  <option value="20">20 (1 sivu, halvin)</option>
+                  <option value="40" selected>40 (2 sivua)</option>
+                  <option value="60">60 (3 sivua, max)</option>
                 </select>
+                <span class="form-hint">Google Places tukee max 60 tulosta per haku.</span>
               </div>
 
               <button class="btn btn-primary btn-large" type="submit" id="searchSubmit">
